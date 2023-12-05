@@ -1,0 +1,26 @@
+{
+  "profiles": {
+    "Docker Compose": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "netadvancedcourse": "StartDebugging",
+        "cartingservice": "StartDebugging",
+        "catalogservice": "StartDebugging",
+        "kafka": "StartWithoutDebugging",
+        "zookeeper": "StartWithoutDebugging"
+      }
+    },
+    "Apis Services": {
+      "commandName": "DockerCompose",
+      "commandVersion": "1.0",
+      "serviceActions": {
+        "cartingservice": "StartDebugging",
+        "catalogservice": "StartDebugging",
+        "kafka": "DoNotStart",
+        "netadvancedcourse": "StartDebugging",
+        "zookeeper": "DoNotStart"
+      }
+    }
+  }
+}

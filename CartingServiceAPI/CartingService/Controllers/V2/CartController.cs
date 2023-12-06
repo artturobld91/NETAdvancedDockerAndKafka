@@ -10,12 +10,13 @@ namespace CartingService.Controllers.V2
     public class CartController : ControllerBase
     {
         private readonly ILogger<CartController> _logger;
-        private CartService _cartService;
+        private ICartService _cartService;
 
-        public CartController(ILogger<CartController> logger)
+        public CartController(ILogger<CartController> logger,
+                              ICartService cartService)
         {
             _logger = logger;
-            _cartService = new CartService();
+            _cartService = cartService;
         }
 
         [HttpPost("CreateCart")]

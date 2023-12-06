@@ -7,6 +7,8 @@ namespace CartingService.BLL.Dtos
         [Required]
         public Guid Id { get; set; }
         [Required]
+        public Guid? ItemCatalogId { get; set; }
+        [Required]
         public string Name { get; set; }
         [Required]
         public decimal Money { get; set; }

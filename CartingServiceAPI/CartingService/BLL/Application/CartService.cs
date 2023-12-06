@@ -6,9 +6,9 @@ namespace CartingService.BLL.Application
     public class CartService : ICartService
     {
         private MongoUnitOfWork _mongo;
-        public CartService()
+        public CartService(MongoUnitOfWork mongo)
         {
-            _mongo = new MongoUnitOfWork();
+            _mongo = mongo;
         }
 
         public async Task CreateCart(CreateCartDto cart)

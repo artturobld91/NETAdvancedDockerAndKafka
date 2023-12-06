@@ -83,9 +83,11 @@ namespace CatalogService.Controllers
             _itemService.UpdateItem(item);
 
             // Calling Kafka Controller to send ItemUpdatedEvent
-            string kafkaEndpointUrl = _configuration["Kafka"].ToString();
+            string kafkaEndpointUrl = $"{_configuration["Kafka"]}/Kafka/ItemUpdated";
+            Uri uri = new Uri(kafkaEndpointUrl);
+
             ItemUpdatedEventDto itemUpdatedEventDto = item.ToItemUpdatedEventDto();
-            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, kafkaEndpointUrl);
+            HttpRequestMessage httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, uri);
             httpRequestMessage.Content = JsonContent.Create(itemUpdatedEventDto);
             HttpClient httpClient = _httpClientFactory.CreateClient();
             var httpsResponseMessage = await httpClient.SendAsync(httpRequestMessage);

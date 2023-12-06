@@ -5,6 +5,7 @@ namespace CartingService.BLL.Dtos //NetAdvancedCourse.Dtos
     public class ItemUpdatedEventDto
     {
         public Guid Id { get; set; }
+        public Guid? ItemCatalogId { get; set; }
         public string Name { get; set; }
 
         public string Description { get; set; }

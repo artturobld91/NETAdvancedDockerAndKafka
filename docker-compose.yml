@@ -5,6 +5,8 @@ services:
     image: confluentinc/cp-zookeeper:latest
     ports:
       - "2181:2181"
+    networks:
+     - my_network
     expose:
       - "2181"
     environment:
@@ -15,6 +17,8 @@ services:
     image: confluentinc/cp-kafka:latest
     ports:
       - "9092:9092"
+    networks:
+     - my_network
     expose:
       - "9092"
     depends_on:
@@ -35,18 +39,32 @@ services:
     build:
       context: .
       dockerfile: NetAdvancedCourse/Dockerfile
+    networks:
+     - my_network
+    container_name: netadvancedcourse
 
   cartingservice:
     image: ${DOCKER_REGISTRY-}cartingservice
     build:
       context: .
       dockerfile: CartingServiceAPI/CartingService/Dockerfile
+    networks:
+     - my_network
+    container_name: cartingservice
 
   catalogservice:
     image: ${DOCKER_REGISTRY-}catalogservice
     build:
       context: .
       dockerfile: CatalogServiceAPI/CatalogService/Dockerfile
+    networks:
+     - my_network
+    container_name: catalogservice
 
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+   my_network:
+     driver: bridge 
+

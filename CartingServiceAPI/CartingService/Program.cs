@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using System.Reflection;
 using CartingService.Workers;
 using CartingService.BLL.Application;
+using CartingService.DAL.Database;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,10 +47,11 @@ builder.Services.AddSwaggerGen(options =>
     var rutaXML = Path.Combine(AppContext.BaseDirectory, archivoXML);
     options.IncludeXmlComments(rutaXML);
 });
+builder.Services.AddSingleton<MongoUnitOfWork>();
+builder.Services.AddSingleton<ICartService>(x => new CartService(x.GetRequiredService<MongoUnitOfWork>()));
+builder.Services.AddSingleton<IItemService>(x => new ItemService(x.GetRequiredService<MongoUnitOfWork>()));
 
-builder.Services.AddSingleton<ICartService, CartService>();
-
-builder.Services.AddHostedService<KafkaConsumerWorker>();
+//builder.Services.AddHostedService<KafkaConsumerWorker>();
 
 var app = builder.Build();
 

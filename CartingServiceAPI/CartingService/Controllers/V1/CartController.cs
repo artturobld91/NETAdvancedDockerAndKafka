@@ -1,5 +1,6 @@
 ﻿using CartingService.BLL.Application;
 using CartingService.BLL.Dtos;
+using CartingService.DAL.Database;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CartingService.Controllers.V1
@@ -11,11 +12,15 @@ namespace CartingService.Controllers.V1
     {
         private readonly ILogger<CartController> _logger;
         private ICartService _cartService;
+        private MongoUnitOfWork _mongoUnitOfWork;
 
-        public CartController(ILogger<CartController> logger, ICartService cartService)
+        public CartController(ILogger<CartController> logger, 
+                              ICartService cartService, 
+                              MongoUnitOfWork mongoUnitOfWork)
         {
             _logger = logger;
-            _cartService = cartService;
+            _cartService = cartService; 
+            _mongoUnitOfWork = mongoUnitOfWork;
         }
 
         [HttpPost("CreateCart")]

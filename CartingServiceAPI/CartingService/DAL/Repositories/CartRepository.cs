@@ -60,7 +60,7 @@ namespace CartingService.DAL.Repositories
         {
             var database = _client.GetDatabase("carting");
             var itemsCollection = database.GetCollection<ItemDto>("items");
-            var filter = Builders<ItemDto>.Filter.Eq(s => s.Id, item.Id);
+            var filter = Builders<ItemDto>.Filter.Eq(s => s.ItemCatalogId, item.ItemCatalogId);
             await itemsCollection.ReplaceOneAsync(filter, item);
         }
 

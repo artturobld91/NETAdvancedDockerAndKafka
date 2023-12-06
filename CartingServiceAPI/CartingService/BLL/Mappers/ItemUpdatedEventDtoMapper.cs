@@ -1,5 +1,4 @@
 ﻿using CartingService.BLL.Dtos;
-using System.Runtime.CompilerServices;
 
 namespace CartingService.BLL.Mappers
 {
@@ -8,9 +7,10 @@ namespace CartingService.BLL.Mappers
         public static ItemDto ToItemDto(this ItemUpdatedEventDto itemUpdatedEventDto)
         { 
             var itemDto = new ItemDto();
-            itemDto.Id = itemUpdatedEventDto.Id;
+            itemDto.ItemCatalogId = itemUpdatedEventDto.Id;
             itemDto.Name = itemUpdatedEventDto.Name;
             itemDto.Money = itemUpdatedEventDto.Amount;
+            itemDto.Image = itemUpdatedEventDto.Image;
             return itemDto;
         }
     }

@@ -1,10 +1,10 @@
 
 using Microsoft.AspNetCore.Mvc.Infrastructure;
-using CatalogService.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
+string kafkaContainerUrl = builder.Configuration["Kafka"].ToString();
 // Add services to the container.
 builder.Services.AddHttpClient();
 builder.Services.AddControllers();

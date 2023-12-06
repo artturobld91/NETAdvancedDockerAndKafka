@@ -1,4 +1,6 @@
-﻿using MongoDB.Driver;
+﻿using CartingService.BLL.Dtos;
+using MongoDB.Bson;
+using MongoDB.Driver;
 
 namespace CartingService.DAL.Repositories
 {
@@ -11,6 +13,14 @@ namespace CartingService.DAL.Repositories
         }
 
         private bool disposed = false;
+
+        public async Task<List<ItemDto>> GetItems(Guid itemCatalogId)
+        {
+            var database = _client.GetDatabase("carting");
+            var itemsCollection = database.GetCollection<ItemDto>("items");
+            var filter = Builders<ItemDto>.Filter.Eq(s => s.ItemCatalogId, itemCatalogId);
+            return await itemsCollection.Find(filter).ToListAsync();
+        }
 
         protected virtual void Dispose(bool disposing)
         {

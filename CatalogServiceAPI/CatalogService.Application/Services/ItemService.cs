@@ -41,6 +41,7 @@ namespace CatalogService.Application.Services
 
         public void AddItem(Item item)
         {
+            item.Id = Guid.NewGuid();
             _context.Items.Add(item);
             _context.SaveChanges();
         }

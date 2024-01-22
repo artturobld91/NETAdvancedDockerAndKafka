@@ -1,6 +1,8 @@
 ﻿using CartingService.BLL.Application;
 using CartingService.BLL.Dtos;
 using CartingService.DAL.Database;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CartingService.Controllers.V1
@@ -24,6 +26,7 @@ namespace CartingService.Controllers.V1
         }
 
         [HttpPost("CreateCart")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> CreateCart()
         {
@@ -34,6 +37,7 @@ namespace CartingService.Controllers.V1
         }
 
         [HttpGet("GetCart/{id}")]
+        [Authorize(Policy = "Manager")]
         [MapToApiVersion("1.0")]
         [ProducesResponseType(typeof(CartDto), StatusCodes.Status200OK)]
         public async Task<CartDto> GetItems([FromRoute] Guid id)
@@ -45,6 +49,7 @@ namespace CartingService.Controllers.V1
         }
 
         [HttpGet("GetItems")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
         public async Task<IEnumerable<ItemDto>> GetItems()
         {
@@ -52,6 +57,7 @@ namespace CartingService.Controllers.V1
         }
 
         [HttpPost("AddItem")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status200OK)]
         public async Task<IActionResult> AddItem([FromBody] AddItemDto item)
         {
@@ -61,6 +67,7 @@ namespace CartingService.Controllers.V1
         }
 
         [HttpDelete("RemoveItem/{id}")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public async Task<IActionResult> RemoveItem([FromRoute] Guid id)
         {

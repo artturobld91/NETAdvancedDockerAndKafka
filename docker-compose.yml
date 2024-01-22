@@ -61,6 +61,15 @@ services:
      - my_network
     container_name: catalogservice
 
+  authenticationservice:
+    image: ${DOCKER_REGISTRY-}authenticationservice
+    build:
+      context: .
+      dockerfile: AuthenticationService/Dockerfile
+    networks:
+     - my_network
+    container_name: authenticationservice
+
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
 

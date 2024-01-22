@@ -3,6 +3,8 @@ using CatalogService.Application.Interfaces;
 using CatalogService.Application.Mappers;
 using CatalogService.Application.Services;
 using CatalogService.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CatalogService.Controllers
@@ -21,6 +23,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("GetCategories")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ServiceFilter(typeof(HateoasCategoryFilterAttribute))]
         [ProducesResponseType(typeof(IEnumerable<CategoryDto>), StatusCodes.Status200OK)]
         public IEnumerable<CategoryDto> GetCategories()
@@ -29,6 +32,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("GetCategory/{id}", Name = "GetCategory")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ServiceFilter(typeof(HateoasCategoryFilterAttribute))]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status200OK)]
         public ActionResult<CategoryDto> GetCategory([FromRoute] int id)
@@ -38,6 +42,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpPost("AddCategory")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         public IActionResult AddCategory([FromBody] CategoryCreateDto category)
         {
@@ -46,6 +51,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpDelete("DeleteCategory/{id}", Name = "DeleteCategory")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public IActionResult DeleteCategory([FromRoute] int id)
         {
@@ -54,6 +60,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpPut("UpdateCategory/{id}", Name = "UpdateCategory")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public IActionResult UpdateCategory([FromRoute] int id, [FromBody] CategoryUpdateDto category)
         {

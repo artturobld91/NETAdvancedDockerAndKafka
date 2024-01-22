@@ -5,8 +5,8 @@ using CatalogService.Application.Interfaces;
 using CatalogService.Application.Mappers;
 using CatalogService.Application.Services;
 using CatalogService.Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Net.Http;
 
 namespace CatalogService.Controllers
 {
@@ -30,6 +30,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("GetItems")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ServiceFilter(typeof(HateoasItemFilterAttribute))]
         [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
         public IEnumerable<ItemDto> GetItems()
@@ -38,6 +39,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("GetItemsByCategoryId/{id}")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
         public IEnumerable<ItemDto> GetItemsByCategoryId([FromRoute] int id)
         {
@@ -45,6 +47,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpGet("GetItem/{id}", Name = "GetItem")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ServiceFilter(typeof(HateoasItemFilterAttribute))]
         [ProducesResponseType(typeof(ItemDto), StatusCodes.Status200OK)]
         public ItemDto GetItem([FromRoute] Guid id)
@@ -53,6 +56,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpPost("GetItemsPagination")]
+        [Authorize(Policy = "Manager, Buyer")]
         [ProducesResponseType(typeof(IEnumerable<ItemDto>), StatusCodes.Status200OK)]
         public IEnumerable<ItemDto> GetItemsPagination([FromBody] PaginationDto paginationDto)
         {
@@ -60,6 +64,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpPost("AddItem")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status201Created)]
         public IActionResult AddItem([FromBody] ItemCreateDto item)
         {
@@ -68,6 +73,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpDelete("RemoveItem/{id}", Name = "RemoveItem")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public IActionResult RemoveItem([FromRoute] Guid id)
         {
@@ -76,6 +82,7 @@ namespace CatalogService.Controllers
         }
 
         [HttpPut("UpdateItem/{id}", Name = "UpdateItem")]
+        [Authorize(Policy = "Manager")]
         [ProducesResponseType(typeof(IActionResult), StatusCodes.Status204NoContent)]
         public async Task<IActionResult> UpdateItem([FromRoute] Guid id, [FromBody] ItemUpdateDto item)
         {

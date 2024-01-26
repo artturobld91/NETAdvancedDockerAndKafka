@@ -55,6 +55,7 @@ namespace CatalogService.Application.Services
 
         public void UpdateItem(ItemUpdateDto item)
         {
+            _context.ChangeTracker.Clear();
             _context.Items.Update(item.ToModel());
             _context.SaveChanges();
         }

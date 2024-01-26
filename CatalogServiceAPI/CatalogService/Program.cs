@@ -1,10 +1,20 @@
 
+using CatalogService.Application.GraphQLQueries;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services
+    .AddGraphQLServer()
+    .AddQueryType(q => q.Name(OperationTypeNames.Query))
+    .AddType<ItemQueries>()
+    .AddType<CategoryQueries>()
+    .AddMutationType(m => m.Name(OperationTypeNames.Mutation))
+    .AddType<ItemMutations>()
+    .AddType<CategoryMutations>();
 
 string kafkaContainerUrl = builder.Configuration["Kafka"].ToString();
 // Add services to the container.
@@ -88,5 +98,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.MapGraphQL();
 
 app.Run();

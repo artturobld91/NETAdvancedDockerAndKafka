@@ -45,6 +45,7 @@ namespace CatalogService.Application.Services
 
         public void UpdateCategory(CategoryUpdateDto category)
         {
+            _context.ChangeTracker.Clear();
             _context.Categories.Update(category.ToModel());
             _context.SaveChanges();
         }

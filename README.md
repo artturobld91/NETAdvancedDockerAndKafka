@@ -6,3 +6,4 @@ This repository contains the following stack:
 * MongoDB.
 * SQLite.
 * Implements Layered Architecture and Clean Architecture.
+* Containerization and Orchestration with Docker and Docker compose.
